@@ -153,7 +153,6 @@ public class SampleAutoConcept extends PedroOpMode {
                         Lift.INSTANCE.toDown(),
                         Extendo.INSTANCE.in(),
                         ActiveIntake.INSTANCE.idle()
-//hi ishaan this is your number 1 fan ilysm
 
                 )
         );
