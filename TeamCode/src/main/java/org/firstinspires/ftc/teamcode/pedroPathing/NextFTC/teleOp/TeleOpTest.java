@@ -48,7 +48,8 @@ public class TeleOpTest extends NextFTCOpMode {
     public void onStartButtonPressed() {
 
         //////////**********  Gamepad 1  **********\\\\\\\\\\
-        driverControlled = new MecanumDriverControlled(motors, gamepadManager.getGamepad1());
+        //Robot centric == true
+        driverControlled = new MecanumDriverControlled(motors, gamepadManager.getGamepad1(),true);
         driverControlled.invoke();
 
         //Extendo out Lift down Arm transfer Claw Transfer
