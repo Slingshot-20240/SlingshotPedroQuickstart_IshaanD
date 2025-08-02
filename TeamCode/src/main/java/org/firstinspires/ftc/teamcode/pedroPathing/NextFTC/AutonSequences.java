@@ -3,7 +3,9 @@ package org.firstinspires.ftc.teamcode.pedroPathing.NextFTC;
 import com.rowanmcalpin.nextftc.core.command.Command;
 import com.rowanmcalpin.nextftc.core.command.groups.ParallelGroup;
 import com.rowanmcalpin.nextftc.core.command.groups.SequentialGroup;
+import com.rowanmcalpin.nextftc.core.command.utility.SingleFunctionCommand;
 import com.rowanmcalpin.nextftc.core.command.utility.delays.Delay;
+import com.rowanmcalpin.nextftc.pedro.DisplacementDelay;
 
 import org.firstinspires.ftc.teamcode.pedroPathing.NextFTC.subsystems.ActiveIntake;
 import org.firstinspires.ftc.teamcode.pedroPathing.NextFTC.subsystems.Arm;
@@ -21,17 +23,21 @@ public class AutonSequences {
      */
     public static Command scoreHigh() {
         return new SequentialGroup(
-                Lift.INSTANCE.toHighBasket(),
+                new ParallelGroup(
+                        Lift.INSTANCE.toHighBasket(),
+                        Extendo.INSTANCE.out()
+                ),
 
+                new DisplacementDelay(5),
                 new ParallelGroup(
                         Arm.INSTANCE.toScore(),
                         ClawPivot.INSTANCE.toScore(),
-                        //Extended - Intake Ready
-                        Extendo.INSTANCE.out()
-                ),
-                new ParallelGroup(
-                        ArmClaw.INSTANCE.open(),
                         IntakePivot.INSTANCE.intake()
+
+                ),
+
+                new SequentialGroup(
+                        ArmClaw.INSTANCE.open()
                 )
         );
     }
@@ -69,14 +75,11 @@ public class AutonSequences {
      */
     public static Command transferBlock() {
         return new SequentialGroup(
-                new SequentialGroup(
-                        Extendo.INSTANCE.in(),
-                        //Move block to claw
-                        new ParallelGroup(
-                                moveBlockToClaw(),
-                                ArmClaw.INSTANCE.close(),
-                                Extendo.INSTANCE.mini_out()
-                        )
+                Extendo.INSTANCE.in(),
+                //Move block to claw
+                new ParallelGroup(
+                        moveBlockInClaw(),
+                        Extendo.INSTANCE.mini_out()
                 )
 
         );
@@ -84,14 +87,31 @@ public class AutonSequences {
     /**
      * Pushes block towards claw for transfer
      */
-    public static Command moveBlockToClaw() {
+    public static Command moveBlockInClaw() {
         return new SequentialGroup(
                 ActiveIntake.INSTANCE.out(),
-                new Delay(0.4),
+                new Delay(0.8),
+                ArmClaw.INSTANCE.close(),
                 ActiveIntake.INSTANCE.idle()
         );
     }
 
+    public static Command scorePickup3() {
+        return new SequentialGroup(
+
+                Lift.INSTANCE.toHighBasket(),
+
+                //Tune Displacement Delay to optimize scoring
+                new DisplacementDelay(5),
+                new ParallelGroup(
+                        Arm.INSTANCE.toScore(),
+                        ClawPivot.INSTANCE.toScore()
+                ),
+
+                ArmClaw.INSTANCE.open()
+
+        );
+    }
 
 
 

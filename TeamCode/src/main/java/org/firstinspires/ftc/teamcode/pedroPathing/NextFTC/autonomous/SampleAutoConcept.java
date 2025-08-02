@@ -88,10 +88,13 @@ public class SampleAutoConcept extends PedroOpMode {
                 new ParallelGroup(
                         new FollowPath(scorePreload),
                         AutonSequences.scoreHigh()
-                )
+                ),
+                //Start active intake
+                ActiveIntake.INSTANCE.in()
 
         );
     }
+
     public Command block1Cycle() {
         return new SequentialGroup(
             //Grab Block 1
@@ -100,6 +103,7 @@ public class SampleAutoConcept extends PedroOpMode {
                     AutonSequences.readyForPickup()
             ),
             AutonSequences.pickUp(3),
+            AutonSequences.transferBlock(),
 
             //Score Pickup 1
             new ParallelGroup(
@@ -109,6 +113,7 @@ public class SampleAutoConcept extends PedroOpMode {
             );
 
         }
+
     public Command block2Cycle() {
         return new SequentialGroup(
                 //Grab Block 2
@@ -126,6 +131,7 @@ public class SampleAutoConcept extends PedroOpMode {
         );
 
     }
+
     public Command block3Cycle() {
         return new SequentialGroup(
                 //Grab Block 3
@@ -138,12 +144,12 @@ public class SampleAutoConcept extends PedroOpMode {
                 //Score Pickup 1
                 new ParallelGroup(
                         new FollowPath(scorePickup3),
-                        AutonSequences.scoreHigh()
-                )
+                        AutonSequences.scorePickup3()
+                ),
+                Extendo.INSTANCE.mini_out()
         );
 
     }
-
 
     public Command park() {
         return new SequentialGroup(
