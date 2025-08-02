@@ -1,10 +1,13 @@
 package org.firstinspires.ftc.teamcode.pedroPathing.NextFTC;
 
+import com.pedropathing.follower.Follower;
 import com.rowanmcalpin.nextftc.core.command.Command;
 import com.rowanmcalpin.nextftc.core.command.groups.ParallelGroup;
+import com.rowanmcalpin.nextftc.core.command.groups.ParallelRaceGroup;
 import com.rowanmcalpin.nextftc.core.command.groups.SequentialGroup;
 import com.rowanmcalpin.nextftc.core.command.utility.SingleFunctionCommand;
 import com.rowanmcalpin.nextftc.core.command.utility.delays.Delay;
+import com.rowanmcalpin.nextftc.core.command.utility.delays.WaitUntil;
 import com.rowanmcalpin.nextftc.pedro.DisplacementDelay;
 
 import org.firstinspires.ftc.teamcode.pedroPathing.NextFTC.subsystems.ActiveIntake;
@@ -16,6 +19,7 @@ import org.firstinspires.ftc.teamcode.pedroPathing.NextFTC.subsystems.IntakePivo
 import org.firstinspires.ftc.teamcode.pedroPathing.NextFTC.subsystems.Lift;
 
 //Make sure all commands are static
+//Try using WaitUntil Command
 public class AutonSequences {
 
     /**
@@ -28,17 +32,14 @@ public class AutonSequences {
                         Extendo.INSTANCE.out()
                 ),
 
-                new DisplacementDelay(5),
                 new ParallelGroup(
-                        Arm.INSTANCE.toScore(),
-                        ClawPivot.INSTANCE.toScore(),
+                        Arm.INSTANCE.toScore().and(ClawPivot.INSTANCE.toScore()),
                         IntakePivot.INSTANCE.intake()
-
                 ),
+                //Tune delay for optimal scoring
+                new Delay(1),
+                ArmClaw.INSTANCE.open()
 
-                new SequentialGroup(
-                        ArmClaw.INSTANCE.open()
-                )
         );
     }
 
@@ -48,10 +49,8 @@ public class AutonSequences {
     public static Command readyForPickup() {
         return new SequentialGroup(
                 new ParallelGroup(
-                        Arm.INSTANCE.toTransfer(),
-                        ClawPivot.INSTANCE.toTransfer(
-                ),
-                Lift.INSTANCE.toTransfer()
+                        Lift.INSTANCE.toTransfer(),
+                        Arm.INSTANCE.toTransfer().and(ClawPivot.INSTANCE.toTransfer())
                 )
         );
     }
@@ -63,11 +62,11 @@ public class AutonSequences {
     public static Command pickUp(double seconds) {
         return new SequentialGroup(
                 ActiveIntake.INSTANCE.in(),
-                new Delay(seconds),
+
                 new ParallelGroup(
                         ActiveIntake.INSTANCE.idle(),
                         IntakePivot.INSTANCE.transfer()
-                )
+                ).afterTime(seconds)
         );
     }
     /**
@@ -90,8 +89,7 @@ public class AutonSequences {
     public static Command moveBlockInClaw() {
         return new SequentialGroup(
                 ActiveIntake.INSTANCE.out(),
-                new Delay(0.8),
-                ArmClaw.INSTANCE.close(),
+                ArmClaw.INSTANCE.close().afterTime(0.8),
                 ActiveIntake.INSTANCE.idle()
         );
     }
@@ -101,13 +99,10 @@ public class AutonSequences {
 
                 Lift.INSTANCE.toHighBasket(),
 
-                //Tune Displacement Delay to optimize scoring
-                new DisplacementDelay(5),
-                new ParallelGroup(
-                        Arm.INSTANCE.toScore(),
-                        ClawPivot.INSTANCE.toScore()
-                ),
+                Arm.INSTANCE.toScore().and(ClawPivot.INSTANCE.toScore()),
 
+                //Tune delay for optimal scoring
+                new Delay(1),
                 ArmClaw.INSTANCE.open()
 
         );
