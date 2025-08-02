@@ -10,6 +10,9 @@ import com.rowanmcalpin.nextftc.ftc.driving.MecanumDriverControlled;
 import com.rowanmcalpin.nextftc.ftc.hardware.controllables.MotorEx;
 
 import org.firstinspires.ftc.teamcode.pedroPathing.NextFTC.subsystems.ActiveIntake;
+import org.firstinspires.ftc.teamcode.pedroPathing.NextFTC.subsystems.Arm;
+import org.firstinspires.ftc.teamcode.pedroPathing.NextFTC.subsystems.ArmClaw;
+import org.firstinspires.ftc.teamcode.pedroPathing.NextFTC.subsystems.ClawPivot;
 import org.firstinspires.ftc.teamcode.pedroPathing.NextFTC.subsystems.Extendo;
 import org.firstinspires.ftc.teamcode.pedroPathing.NextFTC.subsystems.IntakePivot;
 import org.firstinspires.ftc.teamcode.pedroPathing.NextFTC.subsystems.Lift;
@@ -48,45 +51,68 @@ public class TeleOpTest extends NextFTCOpMode {
         driverControlled = new MecanumDriverControlled(motors, gamepadManager.getGamepad1());
         driverControlled.invoke();
 
-        //Extendo out Lift down
+        //Extendo out Lift down Arm transfer Claw Transfer
         gamepadManager.getGamepad1().getRightBumper().setPressedCommand(
                 () -> new ParallelGroup(
                         Lift.INSTANCE.toTransfer(),
+                        Arm.INSTANCE.toTransfer(),
+                        ClawPivot.INSTANCE.toTransfer(),
+                        ArmClaw.INSTANCE.open(),
+
                         Extendo.INSTANCE.out()
                 )
         );
         //Extendo in
         gamepadManager.getGamepad1().getLeftBumper().setPressedCommand(
-                () -> Extendo.INSTANCE.out()
+                Extendo.INSTANCE::in
         );
 
+        //Intake in
         gamepadManager.getGamepad1().getRightTrigger().setPressedCommand(
                 value -> new ParallelGroup(
                         ActiveIntake.INSTANCE.in(),
                         IntakePivot.INSTANCE.intake()
                 )
         );
-        if (gamepadManager.getGamepad2().getRightTrigger().getValue() == 0) {
-            ActiveIntake.INSTANCE.idle();
-            IntakePivot.INSTANCE.transfer();
+        gamepadManager.getGamepad2().getRightTrigger().setReleasedCommand(
+                value -> new ParallelGroup(
+                        ActiveIntake.INSTANCE.idle(),
+                        IntakePivot.INSTANCE.transfer()
+                )
+        );
 
-        }
         //////////**********  Gamepad 2  **********\\\\\\\\\\
 
         //Lift to high basket
         gamepadManager.getGamepad2().getLeftBumper().setPressedCommand(
                 () -> new SequentialGroup(
                         Lift.INSTANCE.toHighBasket(),
-                        Extendo.INSTANCE.in()
+                        new ParallelGroup(
+                                Arm.INSTANCE.toScore(),
+                                ClawPivot.INSTANCE.toScore(),
+                                Extendo.INSTANCE.in()
+                        )
                 )
         );
         //Lift to low basket
         gamepadManager.getGamepad2().getLeftTrigger().setPressedCommand(
                 value -> new ParallelGroup(
                         Lift.INSTANCE.toLowBasket(),
-                        Extendo.INSTANCE.in()
+                        new ParallelGroup(
+                                Arm.INSTANCE.toScore(),
+                                ClawPivot.INSTANCE.toScore(),
+                                Extendo.INSTANCE.in()
+                        )
                 )
         );
+        //Open claw
+        gamepadManager.getGamepad2().getA().setPressedCommand(
+                () -> new SequentialGroup(
+                        ArmClaw.INSTANCE.open()
+                )
+        );
+
+
 
 
 /*
