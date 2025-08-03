@@ -90,28 +90,26 @@ public class SampleAutoConcept extends PedroOpMode {
                 ),
                 //Start active intake
                 ActiveIntake.INSTANCE.in()
-
         );
     }
 
     public Command block1Cycle() {
         return new SequentialGroup(
-            //Grab Block 1
-            new ParallelGroup(
-                    new FollowPath(grabPickup1),
-                    AutonSequences.readyForPickup()
-            ),
-            AutonSequences.pickUp(3),
-            AutonSequences.transferBlock(),
+                //Grab Block 1
+                new ParallelGroup(
+                        new FollowPath(grabPickup1),
+                        AutonSequences.readyForPickup()
+                ),
+                AutonSequences.pickUp(3),
+                AutonSequences.transferBlock(),
 
-            //Score Pickup 1
-            new ParallelGroup(
-                    new FollowPath(scorePickup1),
-                    AutonSequences.scoreHigh()
+                //Score Pickup 1
+                new ParallelGroup(
+                        new FollowPath(scorePickup1),
+                        AutonSequences.scoreHigh()
                 )
-            );
-
-        }
+        );
+    }
 
     public Command block2Cycle() {
         return new SequentialGroup(
@@ -121,6 +119,7 @@ public class SampleAutoConcept extends PedroOpMode {
                         AutonSequences.readyForPickup()
                 ),
                 AutonSequences.pickUp(3),
+                AutonSequences.transferBlock(),
 
                 //Score Pickup 2
                 new ParallelGroup(
@@ -128,7 +127,6 @@ public class SampleAutoConcept extends PedroOpMode {
                         AutonSequences.scoreHigh()
                 )
         );
-
     }
 
     public Command block3Cycle() {
@@ -139,6 +137,7 @@ public class SampleAutoConcept extends PedroOpMode {
                         AutonSequences.readyForPickup()
                 ),
                 AutonSequences.pickUp(3),
+                AutonSequences.transferBlock(),
 
                 //Score Pickup 1
                 new ParallelGroup(
@@ -147,21 +146,19 @@ public class SampleAutoConcept extends PedroOpMode {
                 ),
                 Extendo.INSTANCE.mini_out()
         );
-
     }
 
     public Command park() {
-        return new SequentialGroup(
-                new ParallelGroup(
-                        new FollowPath(park),
-                        //reset all subsystems
-                        Lift.INSTANCE.toDown(),
-                        Extendo.INSTANCE.in(),
-                        ActiveIntake.INSTANCE.idle()
+            return new ParallelGroup(
+                    new FollowPath(park),
+                    //reset all subsystems
+                    Lift.INSTANCE.toDown(),
+                    Extendo.INSTANCE.in(),
+                    ActiveIntake.INSTANCE.idle()
 
-                )
-        );
+            );
     }
+
     @Override
     public void onInit() {
         follower = new Follower(hardwareMap, FConstants.class, LConstants.class);
@@ -172,12 +169,16 @@ public class SampleAutoConcept extends PedroOpMode {
 
     @Override
     public void onStartButtonPressed() {
+
+        //Invoke scorePreload
         scorePreload().invoke();
 
+        //Invoke Cycles
         block1Cycle().invoke();
         block2Cycle().invoke();
         block3Cycle().invoke();
 
+        //Invoke Park
         park().invoke();
     }
 
