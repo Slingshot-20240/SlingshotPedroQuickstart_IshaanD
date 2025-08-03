@@ -72,13 +72,13 @@ public class TeleOpTest extends NextFTCOpMode {
         gamepadManager.getGamepad1().getRightTrigger().setPressedCommand(
                 value -> new ParallelGroup(
                         ActiveIntake.INSTANCE.in(),
-                        IntakePivot.INSTANCE.intake()
+                        IntakePivot.INSTANCE.toIntake()
                 )
         );
         gamepadManager.getGamepad2().getRightTrigger().setReleasedCommand(
                 value -> new ParallelGroup(
                         ActiveIntake.INSTANCE.idle(),
-                        IntakePivot.INSTANCE.transfer()
+                        IntakePivot.INSTANCE.toTransfer()
                 )
         );
 

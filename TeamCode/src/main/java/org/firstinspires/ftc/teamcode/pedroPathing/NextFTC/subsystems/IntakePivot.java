@@ -23,13 +23,13 @@ public class IntakePivot extends Subsystem {
             return intakePivot_position;
         }
     }
-    public Command intake() {
+    public Command toIntake() {
         return new ServoToPosition(intakePivot,
                 intakePivot_positions.INTAKE.getPosition(),
                 this);
     }
 
-    public Command transfer() {
+    public Command toTransfer() {
         return new ServoToPosition(intakePivot,
                 intakePivot_positions.UP.getPosition(),
                 this);

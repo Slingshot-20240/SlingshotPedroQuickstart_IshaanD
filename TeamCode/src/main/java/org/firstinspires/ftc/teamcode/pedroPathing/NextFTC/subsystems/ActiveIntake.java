@@ -12,7 +12,7 @@ public class ActiveIntake extends Subsystem {
     public MotorEx activeIntake;
 
     //Remove intake PID Controller - Not necessary bc ur just setting power when creating Command Functions.
-    //You aren't using run to position
+    //You aren't using run to position 
     //public PIDFController activeIntake_controller = new PIDFController(0.005, 0.0, 0.0, new StaticFeedforward(0.0));
     private enum activeIntake_states {
         IN (0.7),

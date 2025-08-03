@@ -29,7 +29,7 @@ public class AutonSequences {
 
                 new ParallelGroup(
                         Arm.INSTANCE.toScore().and(ClawPivot.INSTANCE.toScore()),
-                        IntakePivot.INSTANCE.intake()
+                        IntakePivot.INSTANCE.toIntake()
                 ),
                 //Tune delay for optimal scoring
                 new Delay(1),
@@ -60,7 +60,7 @@ public class AutonSequences {
 
                 new ParallelGroup(
                         ActiveIntake.INSTANCE.idle(),
-                        IntakePivot.INSTANCE.transfer()
+                        IntakePivot.INSTANCE.toTransfer()
                 ).afterTime(seconds)
         );
     }
