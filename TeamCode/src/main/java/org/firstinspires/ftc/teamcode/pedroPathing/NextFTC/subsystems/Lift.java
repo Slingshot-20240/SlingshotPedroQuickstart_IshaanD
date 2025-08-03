@@ -12,7 +12,8 @@ public class Lift extends Subsystem {
     private Lift() { }
 
     public MotorEx lift;
-    double liftPos = lift.getCurrentPosition();
+    //Uncomment if currentPos is needed
+    //double liftPos = lift.getCurrentPosition();
     public PIDFController lift_controller = new PIDFController(0.005, 0.0, 0.0, new StaticFeedforward(0.0));
     private enum lift_positions {
         DOWN (0),
@@ -20,15 +21,13 @@ public class Lift extends Subsystem {
         LOW_BASKET (1400),
         HIGH_BASKET(2000);
         private final int lift_position;
-        private lift_positions(int pos) {
+        lift_positions(int pos) {
             this.lift_position = pos;
         }
         public int getPosition() {
             return lift_position;
         }
     }
-
-
 
     public Command toDown() {
         return new RunToPosition(lift,
