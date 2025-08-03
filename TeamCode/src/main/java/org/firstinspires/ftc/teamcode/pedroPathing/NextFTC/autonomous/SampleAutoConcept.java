@@ -14,7 +14,7 @@ import com.rowanmcalpin.nextftc.core.command.groups.SequentialGroup;
 import com.rowanmcalpin.nextftc.pedro.FollowPath;
 import com.rowanmcalpin.nextftc.pedro.PedroOpMode;
 
-//Importing Subsystem Classes
+//Importing Subsystem Classes and Pedro Constants
 import org.firstinspires.ftc.teamcode.pedroPathing.Pedro.constants.FConstants;
 import org.firstinspires.ftc.teamcode.pedroPathing.Pedro.constants.LConstants;
 import org.firstinspires.ftc.teamcode.pedroPathing.NextFTC.subsystems.ActiveIntake;
