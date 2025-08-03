@@ -14,7 +14,7 @@ public class IntakePivot extends Subsystem {
 
     private enum intakePivot_positions {
         INTAKE (0),
-        UP (0.5);
+        TRANSFER(0.5);
         private final double intakePivot_position;
         intakePivot_positions(double pos) {
             this.intakePivot_position = pos;
@@ -31,7 +31,7 @@ public class IntakePivot extends Subsystem {
 
     public Command toTransfer() {
         return new ServoToPosition(intakePivot,
-                intakePivot_positions.UP.getPosition(),
+                intakePivot_positions.TRANSFER.getPosition(),
                 this);
     }
 
