@@ -16,9 +16,9 @@ public class Lift extends Subsystem {
     public PIDFController lift_controller = new PIDFController(0.005, 0.0, 0.0, new StaticFeedforward(0.0));
     private enum lift_positions {
         DOWN (0),
-        TRANSFER (200),
-        LOW_BASKET (900),
-        HIGH_Basket (1400);
+        TRANSFER (400),
+        LOW_BASKET (1400),
+        HIGH_BASKET(2000);
         private final int lift_position;
         private lift_positions(int pos) {
             this.lift_position = pos;
@@ -50,7 +50,7 @@ public class Lift extends Subsystem {
     }
     public Command toHighBasket() {
         return new RunToPosition(lift,
-                lift_positions.HIGH_Basket.getPosition(), // TARGET POSITION, IN TICKS
+                lift_positions.HIGH_BASKET.getPosition(), // TARGET POSITION, IN TICKS
                 lift_controller,
                 this); //
     }
