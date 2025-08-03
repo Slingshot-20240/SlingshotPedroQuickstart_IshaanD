@@ -26,7 +26,7 @@ import org.firstinspires.ftc.teamcode.pedroPathing.NextFTC.subsystems.Extendo;
 import org.firstinspires.ftc.teamcode.pedroPathing.NextFTC.subsystems.IntakePivot;
 import org.firstinspires.ftc.teamcode.pedroPathing.NextFTC.subsystems.Lift;
 
-@Autonomous(name = "NextFTC Autonomous Program 2 Java")
+@Autonomous(name = "NextFTC Autonomous ITD Concept")
 public class SampleAutoConcept extends PedroOpMode {
     public SampleAutoConcept() {
         super(Extendo.INSTANCE, Lift.INSTANCE, IntakePivot.INSTANCE, ActiveIntake.INSTANCE,
@@ -95,7 +95,7 @@ public class SampleAutoConcept extends PedroOpMode {
 
     public Command block1Cycle() {
         return new SequentialGroup(
-                //Grab Block 1  
+                //Grab Block 1
                 new ParallelGroup(
                         new FollowPath(grabPickup1),
                         AutonSequences.readyForPickup()
