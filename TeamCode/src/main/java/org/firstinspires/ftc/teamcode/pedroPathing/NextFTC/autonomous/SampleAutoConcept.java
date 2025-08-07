@@ -2,11 +2,7 @@ package org.firstinspires.ftc.teamcode.pedroPathing.NextFTC.autonomous;
 
 import com.pedropathing.follower.Follower;
 import com.pedropathing.localization.Pose;
-import com.pedropathing.pathgen.BezierCurve;
-import com.pedropathing.pathgen.BezierLine;
-import com.pedropathing.pathgen.Path;
-import com.pedropathing.pathgen.PathChain;
-import com.pedropathing.pathgen.Point;
+import com.pedropathing.pathgen.*;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.rowanmcalpin.nextftc.core.command.Command;
 import com.rowanmcalpin.nextftc.core.command.groups.ParallelGroup;
@@ -17,13 +13,7 @@ import com.rowanmcalpin.nextftc.pedro.PedroOpMode;
 //Importing Subsystem Classes and Pedro Constants
 import org.firstinspires.ftc.teamcode.pedroPathing.Pedro.constants.FConstants;
 import org.firstinspires.ftc.teamcode.pedroPathing.Pedro.constants.LConstants;
-import org.firstinspires.ftc.teamcode.pedroPathing.NextFTC.subsystems.ActiveIntake;
-import org.firstinspires.ftc.teamcode.pedroPathing.NextFTC.subsystems.Arm;
-import org.firstinspires.ftc.teamcode.pedroPathing.NextFTC.subsystems.ArmClaw;
-import org.firstinspires.ftc.teamcode.pedroPathing.NextFTC.subsystems.ClawPivot;
-import org.firstinspires.ftc.teamcode.pedroPathing.NextFTC.subsystems.Extendo;
-import org.firstinspires.ftc.teamcode.pedroPathing.NextFTC.subsystems.IntakePivot;
-import org.firstinspires.ftc.teamcode.pedroPathing.NextFTC.subsystems.Lift;
+import org.firstinspires.ftc.teamcode.pedroPathing.NextFTC.subsystems.*;
 
 @Autonomous(name = "NextFTC Autonomous ITD Concept")
 public class SampleAutoConcept extends PedroOpMode {

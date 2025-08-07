@@ -38,7 +38,6 @@ public class AutonSequences {
                         () -> !follower.isBusy()
                 ),
                 ArmClaw.INSTANCE.open()
-
         );
     }
 
@@ -104,7 +103,6 @@ public class AutonSequences {
                 ),
 
                 ArmClaw.INSTANCE.open()
-
         );
     }
 
