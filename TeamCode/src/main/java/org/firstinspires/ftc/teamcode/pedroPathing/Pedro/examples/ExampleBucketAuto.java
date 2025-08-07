@@ -28,7 +28,7 @@ import org.firstinspires.ftc.teamcode.pedroPathing.Pedro.constants.LConstants;
 public class ExampleBucketAuto extends OpMode {
 
     private Follower follower;
-    private Timer pathTimer, actionTimer, opmodeTimer;
+    private Timer pathTimer, opmodeTimer;
 
     /** This is the variable where we store the state of our auto.
      * It is used by the pathUpdate method. */

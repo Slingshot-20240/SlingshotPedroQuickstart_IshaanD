@@ -20,7 +20,6 @@ import org.firstinspires.ftc.teamcode.pedroPathing.Pedro.constants.LConstants;
 import org.firstinspires.ftc.teamcode.pedroPathing.NextFTC.subsystems.ActiveIntake;
 import org.firstinspires.ftc.teamcode.pedroPathing.NextFTC.subsystems.Arm;
 import org.firstinspires.ftc.teamcode.pedroPathing.NextFTC.subsystems.ArmClaw;
-import org.firstinspires.ftc.teamcode.pedroPathing.NextFTC.AutonSequences;
 import org.firstinspires.ftc.teamcode.pedroPathing.NextFTC.subsystems.ClawPivot;
 import org.firstinspires.ftc.teamcode.pedroPathing.NextFTC.subsystems.Extendo;
 import org.firstinspires.ftc.teamcode.pedroPathing.NextFTC.subsystems.IntakePivot;
@@ -86,7 +85,7 @@ public class SampleAutoConcept extends PedroOpMode {
         return new SequentialGroup(
                 new ParallelGroup(
                         new FollowPath(scorePreload),
-                        AutonSequences.scoreHigh()
+                        AutonSequences.scoreHigh(follower)
                 ),
                 //Start active intake
                 ActiveIntake.INSTANCE.in()
@@ -106,7 +105,7 @@ public class SampleAutoConcept extends PedroOpMode {
                 //Score Pickup 1
                 new ParallelGroup(
                         new FollowPath(scorePickup1),
-                        AutonSequences.scoreHigh()
+                        AutonSequences.scoreHigh(follower)
                 )
         );
     }
@@ -124,7 +123,7 @@ public class SampleAutoConcept extends PedroOpMode {
                 //Score Pickup 2
                 new ParallelGroup(
                         new FollowPath(scorePickup2),
-                        AutonSequences.scoreHigh()
+                        AutonSequences.scoreHigh(follower)
                 )
         );
     }
@@ -142,7 +141,7 @@ public class SampleAutoConcept extends PedroOpMode {
                 //Score Pickup 1
                 new ParallelGroup(
                         new FollowPath(scorePickup3),
-                        AutonSequences.scorePickup3()
+                        AutonSequences.scorePickup3(follower)
                 ),
                 Extendo.INSTANCE.mini_out()
         );

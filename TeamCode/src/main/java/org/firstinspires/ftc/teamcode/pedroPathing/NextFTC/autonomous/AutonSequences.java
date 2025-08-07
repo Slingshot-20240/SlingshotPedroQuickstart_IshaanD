@@ -1,9 +1,10 @@
-package org.firstinspires.ftc.teamcode.pedroPathing.NextFTC;
+package org.firstinspires.ftc.teamcode.pedroPathing.NextFTC.autonomous;
 
+import com.pedropathing.follower.Follower;
 import com.rowanmcalpin.nextftc.core.command.Command;
 import com.rowanmcalpin.nextftc.core.command.groups.ParallelGroup;
 import com.rowanmcalpin.nextftc.core.command.groups.SequentialGroup;
-import com.rowanmcalpin.nextftc.core.command.utility.delays.Delay;
+import com.rowanmcalpin.nextftc.core.command.utility.delays.WaitUntil;
 
 import org.firstinspires.ftc.teamcode.pedroPathing.NextFTC.subsystems.ActiveIntake;
 import org.firstinspires.ftc.teamcode.pedroPathing.NextFTC.subsystems.Arm;
@@ -13,6 +14,7 @@ import org.firstinspires.ftc.teamcode.pedroPathing.NextFTC.subsystems.Extendo;
 import org.firstinspires.ftc.teamcode.pedroPathing.NextFTC.subsystems.IntakePivot;
 import org.firstinspires.ftc.teamcode.pedroPathing.NextFTC.subsystems.Lift;
 
+
 //Make sure all commands are static
 //Try using WaitUntil Command
 public class AutonSequences {
@@ -20,7 +22,7 @@ public class AutonSequences {
     /**
      * Lift up, Arm scores
      */
-    public static Command scoreHigh() {
+    public static Command scoreHigh(Follower follower) {
         return new SequentialGroup(
                 new ParallelGroup(
                         Lift.INSTANCE.toHighBasket(),
@@ -31,8 +33,10 @@ public class AutonSequences {
                         Arm.INSTANCE.toScore().and(ClawPivot.INSTANCE.toScore()),
                         IntakePivot.INSTANCE.toIntake()
                 ),
-                //Tune delay for optimal scoring
-                new Delay(1),
+                // Wait until follower finishes path before scoring block
+                new WaitUntil(
+                        () -> !follower.isBusy()
+                ),
                 ArmClaw.INSTANCE.open()
 
         );
@@ -89,21 +93,20 @@ public class AutonSequences {
         );
     }
 
-    public static Command scorePickup3() {
+    public static Command scorePickup3(Follower follower) {
         return new SequentialGroup(
 
                 Lift.INSTANCE.toHighBasket(),
 
                 Arm.INSTANCE.toScore().and(ClawPivot.INSTANCE.toScore()),
+                new WaitUntil(
+                        () -> !follower.isBusy()
+                ),
 
-                //Tune delay for optimal scoring
-                new Delay(1),
                 ArmClaw.INSTANCE.open()
 
         );
     }
-
-
 
 
 }
