@@ -97,7 +97,7 @@ public class TeleOpTest extends NextFTCOpMode {
         );
         //Lift to low basket
         gamepadManager.getGamepad2().getLeftTrigger().setPressedCommand(
-                value -> new ParallelGroup(
+                value -> new SequentialGroup(
                         Lift.INSTANCE.toLowBasket(),
                         new ParallelGroup(
                                 Arm.INSTANCE.toScore(),
