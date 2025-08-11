@@ -67,7 +67,6 @@ public class TeleOpTest extends NextFTCOpMode {
         gamepadManager.getGamepad1().getLeftBumper().setPressedCommand(
                 Extendo.INSTANCE::in
         );
-
         //Intake in
         gamepadManager.getGamepad1().getRightTrigger().setPressedCommand(
                 value -> new ParallelGroup(
